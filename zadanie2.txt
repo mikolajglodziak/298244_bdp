@@ -1,4 +1,4 @@
-/* zad 2 8/
+/* zad 2 */
 CREATE DATABASE zadanie2;
 
 /* zad 3*/
