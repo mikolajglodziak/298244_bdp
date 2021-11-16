@@ -1,0 +1,59 @@
+Niestety jakakolwiek próba zrobienia screenshota póki co się nie powiodła. Załączam opis w jaki sposób rozwiązywałem zadania:
+
+1.
+Zmiana koloru.
+prawy przycisk myszy na warstwę trees -> właściwości -> styl -> wartość unikalna -> VEGDESC -> klasyfikuj -> wybieram kolory.
+
+Pole powierzchni
+Używam wtyczki Group Stats -> Uruchamiam wtyczkę -> wybieram warstwę trees -> w Values przesuwam funkcję sum i pole AREA_KM2, a do Rows VEGDESC -> Calculate
+
+VEGDESC	None
+Deciduous	165377.798
+Evergreen	164578.91900000005
+Mixed Trees	189273.32699999996
+
+2.
+wektor -> podziel warstwę wektorową -> warstwa trees, pole z unikalnym id VEGDESC -> pliki zostaną stworzone we wskazanej lokalizacji 
+
+3.
+tabela warości regions -> wyszukuję obszaer po nazwie -> kopiuję do schowka -> edycja -> wklej obiekty jako -> nowa warstwa (wybieramy nazwę)
+wektor -> geoprocesing -> przytnij -> railroads i nasze nowe pole -> uruchom
+kalkulator pól -> $length -> 34883.24270922694
+
+4.
+Używam wtyczki Group Stats -> Uruchamiam wtyczkę, wybieram warstwę airports -> Rows to Use, a Values average i ELEV, filter ["USE"  LIKE 'Military']
+
+Military	593.25
+
+Jeżeli chodzi o ilości to zamiast average używam count:
+
+Military	8
+
+Dopisuję warunek "ELEV">1400 - mamy tylko jedno takie lotnisko.
+By je usunąć -> show selected on map -> włączam tryb edycji -> usuń zaznaczone
+
+5.
+Wyodrębniam obszar jako warstwa tak samo jak w zadaniu 3. -> Tak samo robię przycięcie -> wynik to nasza table budynków w Bristol-Bay. (jest ich 11)
+
+100 km od rzek -> rivers -> bufor 100 km
+przycięcie poprzedniego obszaru i bufora daje wynik, ale widać, że wszytkie budynki jak i większość terenu Alaski znajduje się bliżej niż 100 km od rzek.
+
+6.
+wektor -> narzędzia analizy -> przecięcia linii -> majrivers i railroads (przecięć jest 8)
+
+7.
+railroads -> wektor -> narzędzia geometrii -> wydobądź wierzchołki (jest ich 662)
+
+8.
+tworzę bufory dla lotnisk i linii kolejowych (tak jak w zadaniu 5)
+wektor -> narzędzia geoprocesingu -> różnica -> bufor lotnisk - bufor linii kolejowych.
+uzyskana geometria to rozwiązanie zadania - nie licząc odległości od dróg - nie mamy warstwy dróg.
+
+9.
+Bagna przed uproszczeniem
+- powierzchnia - 24719.761 km2
+- wierzchołki - 7 469
+
+Po uproszczeniu (w zadaniu nie została sprecyzowana jednostka. Założyłem metry)
+- powierzchnia - 24721.591 km2 - 1.830 km2 błąd wyszedł pomijalnie mały
+- wierzchołki - 6 175 - 1294 mniej - 17% redukcji.
